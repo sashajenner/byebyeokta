@@ -1,0 +1,78 @@
+bypass Okta Verify
+==================
+This is a manual on how to use Okta Verify without a phone.
+
+1. Install pass-otp from https://github.com/tadfisher/pass-otp#installation .
+
+2. Navigate to your organisation's Okta settings. The url is typically of the
+   form https://OKTA_HOME_PAGE/enduser/settings.
+
+For example,
+- The University of Sydney: https://sso.sydney.edu.au/enduser/settings
+- Garvan: https://garvan.okta.com/enduser/settings
+
+3. Scroll to "Extra Verification". This is typically on the right at the bottom.
+
+4. If you already have Okta Verify set up with your organisation, remove it
+   from your account. Otherwise, go to step 5.
+
+4.1. Click "Remove" next to "Okta Verify".
+4.2. Click "Yes".
+
+5. Retrieve the secret OTP key.
+
+5.1. Click "Set up" next to "Okta Verify".
+5.2. Click "Set up" again.
+5.3. Click "iPhone" or "Android". It doesn't matter which one you pick, you
+  won't be needing a phone.
+5.4. Click "Next".
+5.5. Click "Can't scan?".
+5.6. Click the first dropdown menu and select "Setup manually without push
+  notification".
+5.7. Copy the greyed out secret key to your clipboard.
+5.8. Save it somewhere in the rare case you accidentally lose it after
+  finishing step 10 and can't login.
+
+6. Run the following command in a terminal, replacing OTP_NAME with a name of
+   your choosing. Paste the secret key when prompted.
+```sh
+pass otp insert -esi bypass OTP_NAME
+```
+
+7. Click "Next".
+
+8. Run the following command in a terminal and copy the 6-digit number.
+```sh
+pass otp OTP_NAME
+```
+Alternatively, use the `-c` option to copy it directly.
+```sh
+pass otp -c OTP_NAME
+```
+
+9. Paste the number in the "Enter Code" text box.
+
+10. Click "Verify" to finish the setup.
+
+11. Now, whenever you are required to enter the OTP code in the future, simple
+    follow steps 8 and 9.
+
+(Optional) 12. Add the account to your Okta Verify app.
+
+12.1. Open the Okta Verify app.
+12.2. Press the "+" button in the top-right corner.
+12.3. Press "Other".
+12.4. Press "Enter Key Manually".
+12.5. Type an Account Name of your choosing.
+12.6. Type in the secret Key from step 5.7. If you have lost it, run the
+   following command to retrieve it.
+```sh
+pass OTP_NAME | awk -F '[=&]' '{print $2}'
+```
+12.7. Click "Done".
+12.8. Confirm you get the same codes on your phone as when following step 8. If
+   not, you may have misspelled the secret key in step 12.6, in which case
+   start again from step 12.2.
+12.9. If your old account is still on the Okta Verify app you can remove it.
+12.9.1. Press the ">" button next to the old account.
+12.9.2. Press "Delete Account" then "Delete".
