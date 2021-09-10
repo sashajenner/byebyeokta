@@ -1,83 +1,90 @@
 bye bye okta
 ============
-This is a manual on how to use Okta Verify without a phone.
+This is a manual on how to login through Okta portals without a phone.
 
 1. Install pass-otp from https://github.com/tadfisher/pass-otp#installation .
 
-2. Navigate to your organisation's Okta settings. The url is typically of the
+2. If you're being asked to "Set up (two-|multi)factor authentication" when you
+   login to your organisation, go to step 7. Otherwise, carry on to step 3.
+
+3. Login to your organisation's Okta settings. The url is typically of the
    form https://OKTA_HOME_PAGE/enduser/settings.
 
 For example,
 - The University of Sydney: https://sso.sydney.edu.au/enduser/settings
 - Garvan: https://garvan.okta.com/enduser/settings
 
-3. Scroll to "Extra Verification". This is typically on the right at the bottom.
+4. If you can see an "Edit Profile" button, click it and enter your password.
+   Otherwise, carry on to step 5. This is typically at the top-right corner
+   when it appears.
 
-4. If you already have Okta Verify set up with your organisation, remove it
-   from your account. Otherwise, go to step 5.
+5. Scroll to "Extra Verification". This is typically at the bottom on the
+   right.
 
-4.1. Click "Remove" next to "Okta Verify".
-4.2. Click "Yes".
+6. If you already have Okta Verify or Google Authenticator set up with your
+   organisation, remove it.
 
-5. Retrieve the secret OTP key.
+7. Retrieve the secret one-time password (OTP) key.
 
-5.1. Click "Set up" next to "Okta Verify".
-5.2. Click "Set up" again.
-5.3. Click "iPhone" or "Android". It doesn't matter which one you pick, you
+7.1. Click "Set up" next to "Okta Verify".
+7.2. If a (red) button appears, click it. It may say "Configure factor" or "Set up".
+7.3. Click "iPhone" or "Android". It doesn't matter which one you pick, you
   won't be needing a phone.
-5.4. Click "Next".
-5.5. Click "Can't scan?".
-5.6. Click the first dropdown menu and select "Setup manually without push
+7.4. Click "Next".
+7.5. Click "Can't scan?".
+7.6. Click the first dropdown menu and select "Setup manually without push
   notification".
-5.7. Copy the greyed out secret key to your clipboard.
-5.8. Save it somewhere in the rare case you accidentally lose it after
-  finishing step 10 and can't login.
+7.7. Copy the greyed out secret key to your clipboard.
 
-6. Run the following command in a terminal, replacing OTP_NAME with a name of
-   your choosing. Paste the secret key when prompted.
+8. Create the OTP generator by running the following command, replacing
+   OTP_NAME with a name of your choosing. Paste the secret key when prompted.
 ```sh
-pass otp insert -esi bypass OTP_NAME
+pass otp insert -esi byebyeokta OTP_NAME
 ```
 
-7. Click "Next".
-
-8. Run the following command in a terminal and copy the 6-digit number.
+9. Generate the OTP by running the following command.
 ```sh
 pass otp OTP_NAME
 ```
-Alternatively, use the `-c` option to copy it directly.
+Copy the output. Alternatively, use the `-c` option to copy it directly.
 ```sh
 pass otp -c OTP_NAME
 ```
 
-9. Paste the number in the "Enter Code" text box.
+10. Enter the OTP.
 
-10. Click "Verify" to finish the setup.
+10.1. Click "Next".
+10.2. Paste the number in the "Enter Code" text box.
+10.3. Click "Verify" to finish the setup.
+10.4. You may have to click "Finish" as well.
 
-11. Now, whenever you are required to enter the OTP code in the future, simple
-    follow steps 8 and 9.
+11. Now, whenever you are required to enter the OTP code in the future, simply
+    generate it by following step 9.
 
-(Optional) 12. Add the account to your Okta Verify app. This is useful if you
-need to use a different computer and don't have access to one that you have set
-up Okta Verify with.
+(Optional) 12. Add the secret key to a OTP authenticator app. This is useful if
+you need to use a different computer and don't have access to one which you set
+up pass-otp with.
 
-12.1. Open the Okta Verify app.
-12.2. Press the "+" button in the top-right corner.
-12.3. Press "Other".
-12.4. Press "Enter Key Manually".
-12.5. Type an Account Name of your choosing.
-12.6. Type in the secret Key from step 5.7. If you have lost it, run the
-   following command to retrieve it.
+12.1. Find a way to add a new account by entering the secret key manually into
+   the app. If you have lost the key, run the following command to retrieve it.
 ```sh
 pass OTP_NAME | awk -F '[=&]' '{print $2}'
 ```
-12.7. Click "Done".
-12.8. Confirm you get the same codes on your phone as when following step 8. If
-   not, you may have misspelled the secret key in step 12.6, in which case
-   start again from step 12.2.
-12.9. If your old account is still on the Okta Verify app you can remove it.
-12.9.1. Press the ">" button next to the old account.
-12.9.2. Press "Delete Account" then "Delete".
+
+For the Okta Verify app, do the following.
+12.1.1. Press the "+" button in the top-right corner.
+12.1.2. Press "Other".
+12.1.3. Press "Enter Key Manually".
+12.1.4. Type an Account Name of your choosing.
+12.1.5. Type in the secret key.
+12.1.6. Press "Done".
+For the Google Authenticator app, follow similar steps.
+
+12.2. Confirm you get the same codes on your phone as when following step 9. If
+   not, you may have misspelled the secret key, in which case try again from
+   step 12.1.
+12.3. If you have an old account on a OTP authenticator app which you removed
+   in step 6 you can remove it from the app.
 
 (Optional) 13. If you use qutebrowser, consider binding a key chain to the
 `submit_otp_qute.sh` userscript to auto fill and submit once prompted to enter
@@ -85,15 +92,16 @@ the OTP code.
 
 13.1. Copy the script from this repository to your qutebrowser userscripts.
 ```sh
+git clone git@github.com:sashajenner/byebyeokta.git
 mkdir -p ~/.local/share/qutebrowser/userscripts
-cp submit_otp_qute.sh ~/.local/share/qutebrowser/userscripts
+cp byebyeokta/submit_otp_qute.sh ~/.local/share/qutebrowser/userscripts
 ```
 13.2. You can bind it to `,p` by using the following command in qutebrowser.
 ```qute
 :bind ,p spawn --userscript submit_otp_qute.sh OTP_NAME
 ```
 13.3. Test it out.
-13.3.1. Navigate to the page which requires you to enter the OTP code.
+13.3.1. Navigate to a page which requires you to enter the OTP code.
 13.3.2. In normal mode type `,p` or enter the following command.
 ```qute
 :spawn --userscript submit_otp_qute.sh OTP_NAME
