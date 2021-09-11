@@ -20,8 +20,8 @@ Otherwise, login up to the point where it asks you to "Set up
 
 For example,
 
-- [The University of Sydney](https://sso.sydney.edu.au/enduser/settings)
-- [Garvan](https://garvan.okta.com/enduser/settings)
+- The University of Sydney: https://sso.sydney.edu.au/enduser/settings
+- Garvan: https://garvan.okta.com/enduser/settings
 
 If you know any others, please let me know.
 
@@ -33,21 +33,22 @@ If you know any others, please let me know.
 
 4. Retrieve the secret one-time password (OTP) key.
 
-4.1. Click "Set up" next to "Okta Verify".
+    1. Click "Set up" next to "Okta Verify".
 
-4.2. If a button appears, click it. It may say "Configure factor" or "Set up".
+    2. If a button appears, click it. It may say "Configure factor" or "Set
+       up".
 
-4.3. Click "iPhone" or "Android". It doesn't matter which one you pick, you
-  won't be needing a phone.
+    3. Click "iPhone" or "Android". It doesn't matter which one you pick, you
+       won't be needing a phone.
 
-4.4. Click "Next".
+    4. Click "Next".
 
-4.5. Click "Can't scan?".
+    5. Click "Can't scan?".
 
-4.6. Click the first dropdown menu and select "Setup manually without push
-  notification".
+    6. Click the first dropdown menu and select "Setup manually without push
+       notification".
 
-4.7. Copy the greyed out secret key to your clipboard.
+    7. Copy the greyed out secret key to your clipboard.
 
 5. Create the OTP generator by running the following command, replacing
    `OTP_NAME` with a name of your choosing. Paste the secret key when prompted.
@@ -66,10 +67,13 @@ pass otp -c OTP_NAME
 
 7. Enter the OTP.
 
-7.1. Click "Next".
-7.2. Paste the number in the "Enter Code" text box.
-7.3. Click "Verify" to finish the setup.
-7.4. You may have to click "Finish" as well.
+    1. Click "Next".
+
+    2. Paste the number in the "Enter Code" text box.
+
+    3. Click "Verify" to finish the setup.
+
+    4. You may have to click "Finish" as well.
 
 8. Now, whenever you are required to enter the OTP code in the future, simply
    generate it by following step 6.
@@ -77,56 +81,64 @@ pass otp -c OTP_NAME
 
 Authenticator App
 -----------------
-Add the secret key to a OTP authenticator app. This is useful if you need to
-use a different computer and don't have access to one which you set up pass-otp
-with.
+9. Add the secret key to a OTP authenticator app. This is useful if you need to
+   use a different computer and don't have access to one which you set up
+   `pass-otp` with.
 
-9.1. Find a way to add a new account by entering the secret key manually into
-  the app. If you have lost the key, run the following command to retrieve it.
-```sh
-pass OTP_NAME | awk -F '[=&]' '{print $2}'
-```
+    1. Find a way to add a new account by entering the secret key manually into
+       the app. If you have lost the key, run the following command to retrieve
+       it.
+    ```sh
+    pass OTP_NAME | awk -F '[=&]' '{print $2}'
+    ```
 
 For the Okta Verify app, do the following.
+
 9.1.1. Press the "+" button in the top-right corner.
+
 9.1.2. Press "Other".
+
 9.1.3. Press "Enter Key Manually".
+
 9.1.4. Type an Account Name of your choosing.
+
 9.1.5. Type in the secret key.
+
 9.1.6. Press "Done".
+
 For the Google Authenticator app, follow similar steps.
 
-9.2. Confirm you get the same codes on your phone as when following step 6. If
-  not, you may have misspelled the secret key, in which case try again from
-  step 9.1.
-9.3. If you have an old account on a OTP authenticator app which you removed in
-  step 3 you can remove it from the app.
+    2. Confirm you get the same codes on your phone as when following step 6.
+       If not, you may have misspelled the secret key, in which case try again
+       from step 9.1.
+
+    3. If you have an old account on a OTP authenticator app which you removed
+       in step 3 you can remove it from the app.
 
 
 Automating
 ----------
-The goal is to auto fill and submit once prompted to enter the OTP code.
+10. The goal is to auto fill and submit once prompted to enter the OTP code.
 
 If you know a neat way of doing this in Chrome or Firefox, please let me know.
 
 For qutebrowser, consider binding a key chain to the `submit_otp_qute.sh`
 userscript.
 
-10.1. Copy the script from this repository to your qutebrowser userscripts.
-```sh
-git clone git@github.com:sashajenner/byebyeokta.git
-mkdir -p ~/.local/share/qutebrowser/userscripts
-cp byebyeokta/submit_otp_qute.sh ~/.local/share/qutebrowser/userscripts
-```
+    1. Copy the script from this repository to your qutebrowser userscripts.
+    ```sh
+    git clone git@github.com:sashajenner/byebyeokta.git
+    mkdir -p ~/.local/share/qutebrowser/userscripts
+    cp byebyeokta/submit_otp_qute.sh ~/.local/share/qutebrowser/userscripts
+    ```
 
-10.2. You can bind it to `,p` by using the following command in qutebrowser.
-```qute
-:bind , spawn --userscript submit_otp_qute.sh OTP_NAME
-```
+    2. You can bind it to `,p` by using the following command in qutebrowser.
+    ```qute
+    :bind , spawn --userscript submit_otp_qute.sh OTP_NAME
+    ```
 
-10.3. Test it out.
-10.3.1. Navigate to a page which requires you to enter the OTP code.
-10.3.2. In normal mode type `,p` or enter the following command.
-```qute
-:spawn --userscript submit_otp_qute.sh OTP_NAME
-```
+    3. Test it out. Navigate to a page which requires you to enter the OTP
+       code. In normal mode type `,p` or enter the following command.
+    ```qute
+    :spawn --userscript submit_otp_qute.sh OTP_NAME
+    ```
