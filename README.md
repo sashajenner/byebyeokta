@@ -49,6 +49,8 @@ If you know any others, please let me know.
 
     7. Copy the greyed out secret key to your clipboard.
 
+![Setting up Usyd Okta](usyd_setup.gif)
+
 5. Create the OTP generator by running the following command, replacing
    `OTP_NAME` with a name of your choosing. Paste the secret key when prompted.
 ```sh
@@ -114,10 +116,10 @@ use a different computer and don't have access to one which you set up
 The goal is to auto fill and submit once prompted to enter the OTP code.
 
 If you know a neat way of doing this in Chrome or Firefox, please let me know.
-For qutebrowser, consider binding a key chain to the `submit_otp_qute.sh`
+For [qutebrowser](https://github.com/qutebrowser/qutebrowser), consider binding a key chain to the `submit_otp_qute.sh`
 userscript.
 
-![Logging into Usyd Canvas with the qutebrowser script.](usyd_auto.gif)
+![Logging into Usyd Canvas with the qutebrowser script](usyd_auto.gif)
 
 1. Copy the script from this repository to your qutebrowser userscripts.
 ```sh
