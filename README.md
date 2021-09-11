@@ -49,8 +49,6 @@ If you know any others, please let me know.
 
     7. Copy the greyed out secret key to your clipboard.
 
-![Setting up Usyd Okta](usyd_setup.gif)
-
 5. Create the OTP generator by running the following command, replacing
    `OTP_NAME` with a name of your choosing. Paste the secret key when prompted.
 ```sh
