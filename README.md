@@ -2,6 +2,7 @@ bye bye okta
 ============
 This is a manual on how to login through Okta portals without a phone.
 
+![Logging into Usyd Canvas with the command](usyd_manual.gif)
 
 ## Requirements
 Install [pass-otp](https://github.com/tadfisher/pass-otp#installation).
@@ -115,6 +116,8 @@ The goal is to auto fill and submit once prompted to enter the OTP code.
 If you know a neat way of doing this in Chrome or Firefox, please let me know.
 For qutebrowser, consider binding a key chain to the `submit_otp_qute.sh`
 userscript.
+
+![Logging into Usyd Canvas with the qutebrowser script.](usyd_auto.gif)
 
 1. Copy the script from this repository to your qutebrowser userscripts.
 ```sh
