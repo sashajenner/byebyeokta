@@ -82,8 +82,9 @@ Add the secret key to a OTP authenticator app. This is useful if you need to
 use a different computer and don't have access to one which you set up
 `pass-otp` with.
 
-1. Find a way to add a new account by entering the secret key manually into
-   the app. For the Okta Verify app, do the following. The steps are similar for the Google Authenticator app.
+1. Find a way to add a new account by entering the secret key manually into the
+   app. For the Okta Verify app, do the following. The steps are similar for
+   the Google Authenticator app.
 
     1. Press the "+" button in the top-right corner.
 
@@ -93,18 +94,19 @@ use a different computer and don't have access to one which you set up
 
     4. Type an Account Name of your choosing.
 
-    5. Type in the secret key. If you have lost the key, run the following command to retrieve it.
+    5. Type in the secret key. If you have lost the key, run the following
+       command to retrieve it.
     ```sh
     pass OTP_NAME | awk -F '[=&]' '{print $2}'
     ```
 
     6. Press "Done".
 
-2. Confirm you get the same codes on your phone as when following step 6.
-   If not, you may have misspelled the secret key, in which case try again.
+2. Confirm you get the same codes on your phone as when following step 6. If
+   not, you may have misspelled the secret key, in which case try again.
 
-3. If you have an old account on a OTP authenticator app which you removed
-   in step 3 you can remove it from the app.
+3. If you have an old account on a OTP authenticator app which you removed in
+   step 3 you can remove it from the app.
 
 
 ## Automating
@@ -126,8 +128,8 @@ cp byebyeokta/submit_otp_qute.sh ~/.local/share/qutebrowser/userscripts
 :bind , spawn --userscript submit_otp_qute.sh OTP_NAME
 ```
 
-3. Test it out. Navigate to a page which requires you to enter the OTP
-   code. In normal mode type `,p` or enter the following command.
+3. Test it out. Navigate to a page which requires you to enter the OTP code. In
+   normal mode type `,p` or enter the following command.
 ```qute
 :spawn --userscript submit_otp_qute.sh OTP_NAME
 ```
