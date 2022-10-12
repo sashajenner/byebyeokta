@@ -128,7 +128,7 @@ cp byebyeokta/submit_otp_qute.sh ~/.local/share/qutebrowser/userscripts
 
 2. You can bind it to `,p` by using the following command in qutebrowser.
 ```qute
-:bind , spawn --userscript submit_otp_qute.sh OTP_NAME
+:bind ,p spawn --userscript submit_otp_qute.sh OTP_NAME
 ```
 
 3. Test it out. Navigate to a page which requires you to enter the OTP code. In
